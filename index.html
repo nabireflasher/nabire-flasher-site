@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nabire Flasher</title>
+  <!-- Script untuk parsing file Excel (jika digunakan) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 20px;
+      background-color: #f4f4f4;
+    }
+    .container {
+      max-width: 800px;
+      margin: auto;
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    .section {
+      margin: 20px 0;
+    }
+    button {
+      padding: 10px 15px;
+      font-size: 16px;
+      cursor: pointer;
+      background-color: #28a745;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      margin: 5px;
+    }
+    button:hover {
+      background-color: #218838;
+    }
+    input, textarea {
+      padding: 10px;
+      width: 80%;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    .logo {
+      max-width: 200px;
+      margin-bottom: 20px;
+    }
+    .services ul {
+      list-style-type: none;
+      padding: 0;
+    }
+    .services li {
+      margin: 5px 0;
+    }
+    .social-media a {
+      display: inline-block;
+      margin: 5px;
+      text-decoration: none;
+    }
+    .icon {
+      width: 20px;
+      vertical-align: middle;
+      margin-right: 5px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Pastikan file LGO.jpg ada di folder yang sama -->
+    <img src="LGO.jpg" alt="Logo Nabire Flasher" class="logo">
+    <h1>Selamat Datang di Nabire Flasher</h1>
+    <p>Layanan jasa perbaikan gadget terbaik untuk Anda.</p>
+    
+    <!-- Bagian Layanan -->
+    <div class="section services">
+      <h2>Layanan Kami</h2>
+      <ul>
+        <li>Perbaikan layar pecah</li>
+        <li>Ganti baterai</li>
+        <li>Software & flashing</li>
+        <li>Servis hardware lainnya</li>
+      </ul>
+    </div>
+    
+    <!-- Bagian Cek Status Perbaikan -->
+    <div class="section status-check">
+      <h2>Cek Status Perbaikan</h2>
+      <input type="text" id="trackingId" placeholder="Masukkan ID Perbaikan">
+      <button onclick="checkStatus()">Cek</button>
+      <p id="statusResult"></p>
+    </div>
+    
+    <!-- Bagian Upload Gambar -->
+    <div class="section upload-section">
+      <h2>Upload Gambar Kerusakan</h2>
+      <input type="file" id="imageUpload" accept="image/*">
+      <p id="uploadResult"></p>
+    </div>
+
+    <!-- Bagian Upload Data Manual -->
+    <div class="section upload-data">
+      <h2>Upload Data Perbaikan</h2>
+      <textarea id="repairData" placeholder="Masukkan detail perbaikan..."></textarea>
+      <button onclick="uploadData()">Upload Data</button>
+      <p id="dataResult"></p>
+    </div>
+    
+    <!-- Bagian Upload File Excel -->
+    <div class="section upload-excel">
+      <h2>Upload File Excel</h2>
+      <input type="file" id="excelUpload" accept=".xls,.xlsx">
+      <p id="excelResult"></p>
+    </div>
+    
+    <!-- Bagian Form Permintaan Perbaikan -->
+    <div class="section repair-request-form">
+      <h2>Form Permintaan Perbaikan</h2>
+      <form id="repairForm">
+        <input type="text" id="customerId" name="customerId" placeholder="Id Pelanggan" required><br>
+        <input type="text" id="customerName" name="customerName" placeholder="Nama Pelanggan" required><br>
+        <input type="tel" id="customerPhone" name="customerPhone" placeholder="No. hp" required><br>
+        <input type="text" id="brand" name="brand" placeholder="Brand" required><br>
+        <input type="text" id="gadgetType" name="gadgetType" placeholder="Type" required><br>
+        <textarea id="damage" name="damage" placeholder="Kerusakan" required></textarea><br>
+        <textarea id="repair" name="repair" placeholder="Perbaikan" required></textarea><br>
+        <input type="number" id="cost" name="cost" placeholder="Biaya" required><br>
+        <input type="text" id="repairStatus" name="repairStatus" placeholder="Status Perbaikan" required><br>
+        <button type="submit">Submit Permintaan Perbaikan</button>
+      </form>
+      <p id="formResult"></p>
+    </div>
+    
+    <!-- Bagian Chat WhatsApp -->
+    <div class="section whatsapp-chat">
+      <h2>Chat dengan Kami</h2>
+      <p>Klik tombol di bawah untuk menghubungi kami via WhatsApp.</p>
+      <!-- Ganti nomor WA dengan nomor kamu dalam format internasional, misalnya: 6285113366853 -->
+      <a href="https://wa.me/6285113366853" target="_blank">
+        <button>
+          <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp" class="icon">
+          Chat via WhatsApp
+        </button>
+      </a>
+    </div>
+    
+    <!-- Bagian Social Media -->
+    <div class="section social-media">
+      <h2>Follow Us</h2>
+      <a href="https://www.youtube.com/@NabireFlasher" target="_blank">
+        <button>
+          <img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" alt="YouTube" class="icon">
+          Channel YouTube (@NabireFlasher)
+        </button>
+      </a>
+      <a href="https://www.tiktok.com/@nabire_flasher" target="_blank">
+        <button>
+          <img src="https://cdn-icons-png.flaticon.com/512/3046/3046121.png" alt="TikTok" class="icon">
+          Channel TikTok (@nabire_flasher)
+        </button>
+      </a>
+    </div>
+  </div>
+
+  <script>
+    // Fungsi untuk cek status perbaikan dengan menggunakan Netlify Function
+    function checkStatus() {
+      const trackingId = document.getElementById("trackingId").value;
+      if (!trackingId) {
+        document.getElementById("statusResult").innerText = "Masukkan ID Perbaikan!";
+        return;
+      }
+      fetch(`/.netlify/functions/status?trackingId=${trackingId}`)
+        .then(response => response.json())
+        .then(data => {
+          document.getElementById("statusResult").innerText = "Status untuk " + trackingId + ": " + data.status;
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          document.getElementById("statusResult").innerText = "Terjadi kesalahan.";
+        });
+    }
+
+    // Fungsi untuk mengirim data form secara manual via Netlify Function (untuk upload data perbaikan)
+    function uploadData() {
+      const trackingId = prompt("Masukkan ID Perbaikan untuk data ini:");
+      const repairData = document.getElementById("repairData").value;
+      if (!trackingId || !repairData) {
+        document.getElementById("dataResult").innerText = "Pastikan ID dan data perbaikan diisi dengan benar.";
+        return;
+      }
+      fetch("/.netlify/functions/submit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ customerId: trackingId, repairData: repairData })
+      })
+      .then(response => response.json())
+      .then(data => {
+        document.getElementById("dataResult").innerText = data.message;
+      })
+      .catch(error => {
+        console.error("Error:", error);
+        document.getElementById("dataResult").innerText = "Terjadi kesalahan saat upload data.";
+      });
+    }
+
+    // Fungsi untuk mengirim data dari file Excel ke backend melalui Netlify Function
+    document.getElementById("excelUpload").addEventListener("change", function(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const data = new Uint8Array(e.target.result);
+        const workbook = XLSX.read(data, { type: "array" });
+        const sheetName = workbook.SheetNames[0];
+        const sheet = workbook.Sheets[sheetName];
+        const jsonData = XLSX.utils.sheet_to_json(sheet, { header: 1 });
+        fetch("/.netlify/functions/submit", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ excelData: jsonData })
+        })
+        .then(response => response.json())
+        .then(data => {
+          document.getElementById("excelResult").innerText = data.message;
+        })
+        .catch(error => {
+          console.error("Error:", error);
+          document.getElementById("excelResult").innerText = "Terjadi kesalahan saat upload file Excel.";
+        });
+      };
+      reader.readAsArrayBuffer(file);
+    });
+
+    // Fungsi untuk submit form permintaan perbaikan menggunakan Netlify Function
+    document.getElementById("repairForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const customerId = document.getElementById("customerId").value;
+      const customerName = document.getElementById("customerName").value;
+      const customerPhone = document.getElementById("customerPhone").value;
+      const brand = document.getElementById("brand").value;
+      const gadgetType = document.getElementById("gadgetType").value;
+      const damage = document.getElementById("damage").value;
+      const repair = document.getElementById("repair").value;
+      const cost = document.getElementById("cost").value;
+      const repairStatus = document.getElementById("repairStatus").value;
+      
+      fetch("/.netlify/functions/submit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          customerId,
+          customerName,
+          customerPhone,
+          brand,
+          gadgetType,
+          damage,
+          repair,
+          cost,
+          repairStatus
+        })
+      })
+      .then(response => response.json())
+      .then(data => {
+        document.getElementById("formResult").innerText = data.message;
+      })
+      .catch(error => {
+        console.error("Error:", error);
+        document.getElementById("formResult").innerText = "Terjadi kesalahan saat submit data.";
+      });
+    });
+  </script>
+</body>
+</html>
