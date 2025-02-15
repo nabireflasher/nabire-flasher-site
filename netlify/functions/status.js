@@ -1,20 +1,56 @@
+// netlify/functions/status.js
+
+const { createClient } = require("@supabase/supabase-js");
+
 exports.handler = async (event, context) => {
+  // Ambil query parameter "trackingId"
   const { trackingId } = event.queryStringParameters;
   if (!trackingId) {
     return {
       statusCode: 400,
-      body: JSON.stringify({ error: "trackingId dibutuhkan" })
+      body: JSON.stringify({ error: "trackingId dibutuhkan" }),
     };
   }
-  
-  // Di sini, lakukan logika untuk mendapatkan status perbaikan dari database
-  // Untuk contoh, kita gunakan data dummy:
-  const data = {
-    status: "Sedang dalam perbaikan"
-  };
-  
-  return {
-    statusCode: 200,
-    body: JSON.stringify(data)
-  };
+
+  try {
+    // Inisialisasi Supabase Client menggunakan environment variables
+    const supabaseUrl = process.env.SUPABASE_URL;
+    const supabaseKey = process.env.SUPABASE_KEY;
+    const supabase = createClient(supabaseUrl, supabaseKey);
+
+    // Query tabel "repairs" untuk mengambil kolom repair_status berdasarkan customer_id
+    // Ganti "repairs" dengan nama tabel kamu jika berbeda
+    const { data, error } = await supabase
+      .from("repairs")
+      .select("repair_status")
+      .eq("customer_id", trackingId)
+      .single();
+
+    if (error) {
+      console.error("Error querying Supabase:", error);
+      return {
+        statusCode: 500,
+        body: JSON.stringify({ error: "Terjadi kesalahan saat mengambil data dari database." }),
+      };
+    }
+
+    if (!data) {
+      return {
+        statusCode: 200,
+        body: JSON.stringify({ status: "ID tidak ditemukan atau belum terdaftar" }),
+      };
+    }
+
+    // Kembalikan status perbaikan dari data yang diambil
+    return {
+      statusCode: 200,
+      body: JSON.stringify({ status: data.repair_status }),
+    };
+  } catch (err) {
+    console.error("Unexpected error:", err);
+    return {
+      statusCode: 500,
+      body: JSON.stringify({ error: "Terjadi kesalahan tak terduga." }),
+    };
+  }
 };
