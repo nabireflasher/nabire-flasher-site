@@ -15,7 +15,7 @@ exports.handler = async (event, context) => {
     // Parsing data dari body request
     const data = JSON.parse(event.body);
     // Pastikan data memiliki field yang dibutuhkan:
-    // customerId, customerName, customerPhone, brand, gadgetType, damage, repair, cost, repairStatus
+    // IdPelanggan, NamaPelanggag, NoHp, Brand, Type, Kerusakan, Perbaikan, Biaya, StatusPerbaikan
 
     // Inisialisasi Supabase Client menggunakan environment variables
     const supabaseUrl = process.env.SUPABASE_URL;
@@ -27,15 +27,15 @@ exports.handler = async (event, context) => {
       .from("repairs") // Ubah "repairs" jika nama tabel kamu berbeda
       .insert([
         {
-          customer_id: data.customerId,
-          customer_name: data.customerName,
-          customer_phone: data.customerPhone,
-          brand: data.brand,
-          gadget_type: data.gadgetType,
-          damage: data.damage,
-          repair: data.repair,
-          cost: data.cost,
-          repair_status: data.repairStatus,
+          Id_Pelanggan: data.customerId,
+          Nama-Pelanggan: data.customerName,
+          No_hp: data.customerPhone,
+          Brand: data.brand,
+          Type: data.gadgetType,
+          Kerusakan: data.damage,
+          Perbaikan: data.repair,
+          Biaya: data.cost,
+          Status_Perbaikan: data.repairStatus,
         },
       ]);
 

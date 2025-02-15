@@ -22,8 +22,8 @@ exports.handler = async (event, context) => {
     // Ganti "repairs" dengan nama tabel kamu jika berbeda
     const { data, error } = await supabase
       .from("repairs")
-      .select("repair_status")
-      .eq("customer_id", trackingId)
+      .select("Status_Perbaikan")
+      .eq("Id_Pelanggan", trackingId)
       .single();
 
     if (error) {
