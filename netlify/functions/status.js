@@ -44,7 +44,7 @@ exports.handler = async (event, context) => {
     // Kembalikan status perbaikan dari data yang diambil
     return {
       statusCode: 200,
-      body: JSON.stringify({ status: data.repair_status }),
+      body: JSON.stringify({ status: data.Status_Perbaikan }),
     };
   } catch (err) {
     console.error("Unexpected error:", err);

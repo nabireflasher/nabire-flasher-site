@@ -28,7 +28,7 @@ exports.handler = async (event, context) => {
       .insert([
         {
           Id_Pelanggan: data.customerId,
-          Nama-Pelanggan: data.customerName,
+          Nama_Pelanggan: data.customerName,
           No_hp: data.customerPhone,
           Brand: data.brand,
           Type: data.gadgetType,
